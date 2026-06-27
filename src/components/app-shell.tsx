@@ -19,6 +19,7 @@ const nav: Array<{ to: string; label: string; icon: typeof LayoutDashboard; exac
   { to: "/leave", label: "Leave", icon: CalendarCheck },
   { to: "/payroll", label: "Payroll", icon: Wallet },
   { to: "/recruitment", label: "Recruitment", icon: UserPlus },
+  { to: "/news", label: "News", icon: Megaphone },
   { to: "/reports", label: "Reports", icon: BarChart3 },
 ];
 
