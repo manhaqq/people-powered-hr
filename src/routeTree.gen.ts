@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RecruitmentRouteImport } from './routes/recruitment'
 import { Route as PayrollRouteImport } from './routes/payroll'
 import { Route as LeaveRouteImport } from './routes/leave'
 import { Route as EmployeesRouteImport } from './routes/employees'
 import { Route as AttendanceRouteImport } from './routes/attendance'
 import { Route as IndexRouteImport } from './routes/index'
 
+const RecruitmentRoute = RecruitmentRouteImport.update({
+  id: '/recruitment',
+  path: '/recruitment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PayrollRoute = PayrollRouteImport.update({
   id: '/payroll',
   path: '/payroll',
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/employees': typeof EmployeesRoute
   '/leave': typeof LeaveRoute
   '/payroll': typeof PayrollRoute
+  '/recruitment': typeof RecruitmentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/employees': typeof EmployeesRoute
   '/leave': typeof LeaveRoute
   '/payroll': typeof PayrollRoute
+  '/recruitment': typeof RecruitmentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,33 @@ export interface FileRoutesById {
   '/employees': typeof EmployeesRoute
   '/leave': typeof LeaveRoute
   '/payroll': typeof PayrollRoute
+  '/recruitment': typeof RecruitmentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/attendance' | '/employees' | '/leave' | '/payroll'
+  fullPaths:
+    | '/'
+    | '/attendance'
+    | '/employees'
+    | '/leave'
+    | '/payroll'
+    | '/recruitment'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/attendance' | '/employees' | '/leave' | '/payroll'
-  id: '__root__' | '/' | '/attendance' | '/employees' | '/leave' | '/payroll'
+  to:
+    | '/'
+    | '/attendance'
+    | '/employees'
+    | '/leave'
+    | '/payroll'
+    | '/recruitment'
+  id:
+    | '__root__'
+    | '/'
+    | '/attendance'
+    | '/employees'
+    | '/leave'
+    | '/payroll'
+    | '/recruitment'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,10 +105,18 @@ export interface RootRouteChildren {
   EmployeesRoute: typeof EmployeesRoute
   LeaveRoute: typeof LeaveRoute
   PayrollRoute: typeof PayrollRoute
+  RecruitmentRoute: typeof RecruitmentRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/recruitment': {
+      id: '/recruitment'
+      path: '/recruitment'
+      fullPath: '/recruitment'
+      preLoaderRoute: typeof RecruitmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/payroll': {
       id: '/payroll'
       path: '/payroll'
@@ -125,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   EmployeesRoute: EmployeesRoute,
   LeaveRoute: LeaveRoute,
   PayrollRoute: PayrollRoute,
+  RecruitmentRoute: RecruitmentRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
