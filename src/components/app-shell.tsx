@@ -7,6 +7,7 @@ import {
   Wallet,
   UserPlus,
   BarChart3,
+  Megaphone,
   Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
