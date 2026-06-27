@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PayrollRouteImport } from './routes/payroll'
 import { Route as LeaveRouteImport } from './routes/leave'
 import { Route as EmployeesRouteImport } from './routes/employees'
 import { Route as AttendanceRouteImport } from './routes/attendance'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PayrollRoute = PayrollRouteImport.update({
+  id: '/payroll',
+  path: '/payroll',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LeaveRoute = LeaveRouteImport.update({
   id: '/leave',
   path: '/leave',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/attendance': typeof AttendanceRoute
   '/employees': typeof EmployeesRoute
   '/leave': typeof LeaveRoute
+  '/payroll': typeof PayrollRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/attendance': typeof AttendanceRoute
   '/employees': typeof EmployeesRoute
   '/leave': typeof LeaveRoute
+  '/payroll': typeof PayrollRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/attendance': typeof AttendanceRoute
   '/employees': typeof EmployeesRoute
   '/leave': typeof LeaveRoute
+  '/payroll': typeof PayrollRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/attendance' | '/employees' | '/leave'
+  fullPaths: '/' | '/attendance' | '/employees' | '/leave' | '/payroll'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/attendance' | '/employees' | '/leave'
-  id: '__root__' | '/' | '/attendance' | '/employees' | '/leave'
+  to: '/' | '/attendance' | '/employees' | '/leave' | '/payroll'
+  id: '__root__' | '/' | '/attendance' | '/employees' | '/leave' | '/payroll'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +76,18 @@ export interface RootRouteChildren {
   AttendanceRoute: typeof AttendanceRoute
   EmployeesRoute: typeof EmployeesRoute
   LeaveRoute: typeof LeaveRoute
+  PayrollRoute: typeof PayrollRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/payroll': {
+      id: '/payroll'
+      path: '/payroll'
+      fullPath: '/payroll'
+      preLoaderRoute: typeof PayrollRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/leave': {
       id: '/leave'
       path: '/leave'
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   AttendanceRoute: AttendanceRoute,
   EmployeesRoute: EmployeesRoute,
   LeaveRoute: LeaveRoute,
+  PayrollRoute: PayrollRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
